@@ -17,7 +17,7 @@ const SITE_CONFIG = {
     formEndpoint: "", 
 
     // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
-    sheetApiUrl: "PASTE_YOUR_WEB_APP_URL_HERE" 
+    sheetApiUrl: "https://script.google.com/macros/s/AKfycbx3Ron554XN3yUGhGL0ihZktsu07U0tU9jCm_Ip-0DQFxcVjUnY-idBFoVIeKeDjI3xgQ/exec" 
 };
 
 // ========================================
