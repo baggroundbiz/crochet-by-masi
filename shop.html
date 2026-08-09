@@ -63,11 +63,20 @@
                 </div>
 
                 <!-- Populated by JavaScript -->
-                <div id="shop-products-grid" class="product-grid"></div>
+                <div id="shop-products-grid" class="product-grid">
+                    <div class="loader-overlay" id="shop-loader">
+                        <div class="loader-ring"></div>
+                        <p class="small-text decorative-font">Loading creations...</p>
+                    </div>
+                </div>
                 
                 <div id="no-products-msg" class="text-center mt-4 hidden">
                     <p>No creations found matching your search. Want something completely unique?</p>
                     <a href="custom-order.html" class="btn btn-outline mt-2">Request a Custom Order</a>
+                </div>
+                
+                <div id="fetch-error-msg" class="text-center mt-4 hidden">
+                    <p class="text-muted">We're having trouble loading the catalogue right now. Please try refreshing.</p>
                 </div>
 
             </div>
@@ -75,7 +84,6 @@
     </main>
 
     <footer class="site-footer">
-        <!-- Exact same footer as index.html -->
         <div class="container footer-container">
             <div class="footer-brand">
                 <img src="assets/logo/crochet-by-masi.png" alt="Crochet by Masi" class="footer-logo">
