@@ -55,8 +55,7 @@
                 </div>
                 <div class="hero-visual">
                     <div class="hero-image-wrapper">
-                        <!-- Placeholder for a beautiful crochet product photo -->
-                        <img src="https://i.ibb.co/JjhMyQcY/Gemini-Generated-Image-ebj9ejebj9ejebj9.png?q=80&w=800&auto=format&fit=crop" alt="Handmade crochet flowers" class="hero-img" loading="lazy">
+                        <img src="https://images.unsplash.com/photo-1628157732272-2d8c90ebdb5c?q=80&w=800&auto=format&fit=crop" alt="Handmade crochet flowers" class="hero-img" loading="lazy">
                         <div class="hero-badge">
                             <img src="assets/logo/crochet-by-masi.png" alt="Crochet by Masi">
                         </div>
@@ -72,8 +71,13 @@
                     <p>Handmade pieces created to make ordinary moments a little more special.</p>
                 </div>
                 
-                <!-- Populated by JavaScript -->
-                <div id="featured-products-grid" class="product-grid"></div>
+                <!-- Populated by JavaScript with a Loading State -->
+                <div id="featured-products-grid" class="product-grid">
+                    <div class="loader-overlay" id="featured-loader">
+                        <div class="loader-ring"></div>
+                        <p class="small-text decorative-font">Loading creations...</p>
+                    </div>
+                </div>
                 
                 <div class="text-center mt-4">
                     <a href="shop.html" class="btn btn-outline">View All Creations</a>
