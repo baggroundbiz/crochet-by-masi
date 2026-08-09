@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Fetch Data Directly from Google Sheets 
+// Fetch Data Directly from Google Sheets
 async function fetchProductsFromSheet() {
     try {
         if (!SITE_CONFIG.sheetId || SITE_CONFIG.sheetId === "PASTE_YOUR_SPREADSHEET_ID_HERE") {
@@ -78,7 +78,8 @@ async function fetchProductsFromSheet() {
                 if (header === 'image' && typeof value === 'string' && value.includes('drive.google.com')) {
                     const match = value.match(/[-\w]{25,}/);
                     if (match) {
-                        value = `https://drive.google.com/uc?export=view&id=${match[0]}`;
+                        // UPDATED WORKAROUND LINK FOR GOOGLE DRIVE IMAGES
+                        value = `https://lh3.googleusercontent.com/d/${match[0]}`;
                     }
                 }
                 
