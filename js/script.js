@@ -13,112 +13,34 @@ const SITE_CONFIG = {
     // Replace with your email address
     email: "hello@crochetbymasi.com", 
     
-    // If using Formspree or FormSubmit, put the URL here. 
-    // Example: "https://formsubmit.co/your-email@example.com"
-    // Leave it as "" if you don't have a form backend yet.
-    formEndpoint: "" 
+    // Form endpoint for Custom Orders (e.g., Formspree URL)
+    formEndpoint: "", 
+
+    // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
+    sheetApiUrl: "PASTE_YOUR_WEB_APP_URL_HERE" 
 };
 
 // ========================================
-// PRODUCT DATABASE
-// Add, edit, or remove products here.
-// Categories should be: "flowers", "amigurumi", "gifts", "home"
+// PRODUCT DATABASE (Populated by Google Sheets)
 // ========================================
-const products = [
-    {
-        id: 1,
-        name: "Crochet Rose Bouquet",
-        category: "flowers",
-        price: 1299,
-        description: "A beautiful handmade bouquet of everlasting crochet roses.",
-        image: "https://images.unsplash.com/photo-1628157732272-2d8c90ebdb5c?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: true
-    },
-    {
-        id: 2,
-        name: "Mini Crochet Bear",
-        category: "amigurumi",
-        price: 799,
-        description: "An adorable, soft, and huggable mini bear. Perfect for gifting.",
-        image: "https://images.unsplash.com/photo-1520986606214-8b456906c813?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: true
-    },
-    {
-        id: 3,
-        name: "Crochet Flower Pot",
-        category: "home",
-        price: 899,
-        description: "A cute little potted plant that needs zero watering.",
-        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: true
-    },
-    {
-        id: 4,
-        name: "Daisy Coasters (Set of 4)",
-        category: "home",
-        price: 599,
-        description: "Protect your tables with these lovely floral coasters.",
-        image: "https://images.unsplash.com/photo-1616874535244-73aea5daadb4?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: false
-    },
-    {
-        id: 5,
-        name: "Custom Gift Creation",
-        category: "gifts",
-        price: "On Request",
-        description: "A completely custom piece designed just for your loved one.",
-        image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: true
-    },
-    {
-        id: 6,
-        name: "Sleepy Bunny Plush",
-        category: "amigurumi",
-        price: 1199,
-        description: "A sleepy bunny with long ears, perfect for nurseries.",
-        image: "https://images.unsplash.com/photo-1603403328080-2a8d56b099b2?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: false
-    },
-    {
-        id: 7,
-        name: "Sunflower Keychain",
-        category: "gifts",
-        price: 349,
-        description: "Carry a little sunshine with you wherever you go.",
-        image: "https://images.unsplash.com/photo-1596431980862-23097b65349e?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: false
-    },
-    {
-        id: 8,
-        name: "Tulip Bouquet",
-        category: "flowers",
-        price: 1499,
-        description: "Vibrant crochet tulips wrapped beautifully for gifting.",
-        image: "https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=600&auto=format&fit=crop",
-        available: true,
-        featured: false
-    }
-];
+let products = [];
 
 // ========================================
-// CORE LOGIC (Do not edit below unless necessary)
+// CORE LOGIC 
 // ========================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     initNavigation();
     initDynamicLinks();
     initFooterYear();
     
-    // Page specific initialization
+    // If the page needs products, fetch them first
+    if (document.getElementById('featured-products-grid') || document.getElementById('shop-products-grid')) {
+        await fetchProductsFromSheet();
+    }
+    
     if (document.getElementById('featured-products-grid')) {
-        renderProducts(products.filter(p => p.featured), 'featured-products-grid');
+        renderProducts(products.filter(p => p.featured === true), 'featured-products-grid', 'featured-loader');
     }
     
     if (document.getElementById('shop-products-grid')) {
@@ -129,6 +51,32 @@ document.addEventListener('DOMContentLoaded', () => {
         initForm();
     }
 });
+
+// Fetch Data From Google Sheets
+async function fetchProductsFromSheet() {
+    try {
+        if (!SITE_CONFIG.sheetApiUrl || SITE_CONFIG.sheetApiUrl === "PASTE_YOUR_WEB_APP_URL_HERE") {
+            throw new Error("API URL not configured yet.");
+        }
+
+        const response = await fetch(SITE_CONFIG.sheetApiUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const data = await response.json();
+        
+        products = data.map(p => ({
+            ...p,
+            available: p.available === true || p.available === "TRUE",
+            featured: p.featured === true || p.featured === "TRUE"
+        }));
+
+    } catch (error) {
+        console.error("Failed to load products from Google Sheets:", error);
+        // Show error message on shop page if fetch fails
+        const errorMsg = document.getElementById('fetch-error-msg');
+        if (errorMsg) errorMsg.classList.remove('hidden');
+    }
+}
 
 // Mobile Navigation
 function initNavigation() {
@@ -177,18 +125,27 @@ function initDynamicLinks() {
 }
 
 // Render Products into a Grid
-function renderProducts(productsToRender, containerId) {
+function renderProducts(productsToRender, containerId, loaderId) {
     const container = document.getElementById(containerId);
     if (!container) return;
     
-    container.innerHTML = '';
+    // Hide the loader gracefully
+    const loader = document.getElementById(loaderId);
+    if (loader) {
+        loader.classList.add('hidden');
+    }
+    
+    // Clear existing products (keep loader if needed, but it's hidden)
+    container.innerHTML = ''; 
     
     if (productsToRender.length === 0) {
-        document.getElementById('no-products-msg')?.classList.remove('hidden');
+        const noMsg = document.getElementById('no-products-msg');
+        if (noMsg) noMsg.classList.remove('hidden');
         return;
     }
     
-    document.getElementById('no-products-msg')?.classList.add('hidden');
+    const noMsg = document.getElementById('no-products-msg');
+    if (noMsg) noMsg.classList.add('hidden');
 
     productsToRender.forEach(product => {
         const formattedPrice = typeof product.price === 'number' ? `₹${product.price}` : product.price;
@@ -221,7 +178,7 @@ function renderProducts(productsToRender, containerId) {
 
 // Shop Filtering and Search
 function initShop() {
-    renderProducts(products, 'shop-products-grid');
+    renderProducts(products, 'shop-products-grid', 'shop-loader');
     
     const filterBtns = document.querySelectorAll('.filter-btn');
     const searchInput = document.getElementById('product-search');
@@ -229,7 +186,6 @@ function initShop() {
     let currentCategory = 'all';
     let currentSearch = '';
 
-    // Check URL parameters for category
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
     if (categoryParam) {
@@ -252,7 +208,7 @@ function initShop() {
         let filtered = products;
 
         if (currentCategory !== 'all') {
-            filtered = filtered.filter(p => p.category === currentCategory);
+            filtered = filtered.filter(p => p.category.toLowerCase() === currentCategory);
         }
 
         if (currentSearch.trim() !== '') {
@@ -263,7 +219,7 @@ function initShop() {
             );
         }
 
-        renderProducts(filtered, 'shop-products-grid');
+        renderProducts(filtered, 'shop-products-grid', 'shop-loader');
     }
 
     filterBtns.forEach(btn => {
@@ -289,7 +245,6 @@ function initForm() {
     const submitBtn = document.getElementById('submit-btn');
 
     if (!SITE_CONFIG.formEndpoint || SITE_CONFIG.formEndpoint === "") {
-        // No backend configured. Hide form, show fallback.
         form.classList.add('hidden');
         fallbackUI.classList.remove('hidden');
         return;
@@ -298,7 +253,6 @@ function initForm() {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Show loading state
         submitBtn.disabled = true;
         submitBtn.classList.add('hidden');
         loadingUI.classList.remove('hidden');
