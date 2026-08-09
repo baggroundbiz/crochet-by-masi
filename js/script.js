@@ -4,20 +4,13 @@
 // ========================================
 
 const SITE_CONFIG = {
-    // Replace with your actual Instagram handle (without the @)
     instagram: "crochetbymasi", 
-    
-    // Replace with your WhatsApp number (include country code, no + or spaces. e.g. 919876543210)
     whatsapp: "910000000000", 
-    
-    // Replace with your email address
     email: "hello@crochetbymasi.com", 
-    
-    // Form endpoint for Custom Orders (e.g., Formspree URL)
     formEndpoint: "", 
-
-    // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
-    sheetApiUrl: "https://script.google.com/macros/s/AKfycbx3Ron554XN3yUGhGL0ihZktsu07U0tU9jCm_Ip-0DQFxcVjUnY-idBFoVIeKeDjI3xgQ/exec" 
+    
+    // Direct Spreadsheet ID for Frontline Homes method
+    sheetId: "1YRjz-8e4zZoLeXPio4njdgCwABQ0wCjlLUZEotOakJU" 
 };
 
 // ========================================
@@ -52,23 +45,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Fetch Data From Google Sheets
+// Fetch Data Directly from Google Sheets 
 async function fetchProductsFromSheet() {
     try {
-        if (!SITE_CONFIG.sheetApiUrl || SITE_CONFIG.sheetApiUrl === "PASTE_YOUR_WEB_APP_URL_HERE") {
-            throw new Error("API URL not configured yet.");
+        if (!SITE_CONFIG.sheetId || SITE_CONFIG.sheetId === "PASTE_YOUR_SPREADSHEET_ID_HERE") {
+            throw new Error("Spreadsheet ID not configured yet.");
         }
 
-        const response = await fetch(SITE_CONFIG.sheetApiUrl);
+        // Direct Google Visualization API endpoint
+        const sheetName = "Products";
+        const url = `https://docs.google.com/spreadsheets/d/${SITE_CONFIG.sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+        const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
         
-        const data = await response.json();
+        // Google returns text wrapped in a function, so we must extract the pure JSON
+        const text = await response.text();
+        const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+        const data = JSON.parse(jsonString);
         
-        products = data.map(p => ({
-            ...p,
-            available: p.available === true || p.available === "TRUE",
-            featured: p.featured === true || p.featured === "TRUE"
-        }));
+        // Extract column headers
+        const headers = data.table.cols.map(col => col.label.toLowerCase());
+        
+        // Map the rows to our product array
+        products = data.table.rows.map(row => {
+            let product = {};
+            headers.forEach((header, index) => {
+                // Handle empty cells gracefully
+                let value = row.c[index] ? row.c[index].v : "";
+                
+                // Convert Google Drive view links to direct image links
+                if (header === 'image' && typeof value === 'string' && value.includes('drive.google.com')) {
+                    const match = value.match(/[-\w]{25,}/);
+                    if (match) {
+                        value = `https://drive.google.com/uc?export=view&id=${match[0]}`;
+                    }
+                }
+                
+                product[header] = value;
+            });
+            
+            // Format booleans for the frontend logic
+            return {
+                ...product,
+                available: product.available === true || product.available === "TRUE" || product.available === "true",
+                featured: product.featured === true || product.featured === "TRUE" || product.featured === "true"
+            };
+        });
 
     } catch (error) {
         console.error("Failed to load products from Google Sheets:", error);
