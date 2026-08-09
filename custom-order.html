@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Orders | Crochet by Masi</title>
+    <meta name="description" content="Have an idea that isn't in our collection? Request a custom handmade crochet creation from Crochet by Masi.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Lobster+Two:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-link">
+                <img src="assets/logo/crochet-by-masi.png" alt="Crochet by Masi" class="brand-logo">
+            </a>
+            
+            <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span class="hamburger"></span>
+            </button>
+
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="custom-order.html" class="active">Custom Orders</a></li>
+                    <li><a href="about.html">Our Story</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-main pt-header">
+        <div class="page-header text-center bg-cream section-padding">
+            <div class="container">
+                <h1 class="decorative-font">Let's make something special.</h1>
+                <p>Have an idea that isn't in our collection? Tell us what you're imagining.</p>
+            </div>
+        </div>
+
+        <section class="form-section section-padding">
+            <div class="container form-container">
+                
+                <div id="form-fallback" class="form-fallback hidden text-center">
+                    <div class="fallback-card">
+                        <h3 class="decorative-font">Online enquiry submission isn't connected yet.</h3>
+                        <p>Please contact us directly to discuss your custom creation!</p>
+                        <div class="hero-buttons justify-center mt-3">
+                            <a href="#" class="btn btn-primary instagram-link">Instagram DM</a>
+                            <a href="#" class="btn btn-outline whatsapp-link">WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="custom-order-form" class="custom-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone / WhatsApp *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram">Instagram Username</label>
+                            <input type="text" id="instagram" name="instagram" placeholder="@username">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product_type">What would you like?</label>
+                        <input type="text" id="product_type" name="product_type" placeholder="e.g. A blue bunny, a custom bouquet">
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="colours">Preferred Colours</label>
+                            <input type="text" id="colours" name="colours">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Required by Date</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select an option</option>
+                                <option value="Under ₹1000">Under ₹1000</option>
+                                <option value="₹1000 - ₹2500">₹1000 - ₹2500</option>
+                                <option value="₹2500 - ₹5000">₹2500 - ₹5000</option>
+                                <option value="₹5000+">₹5000+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Describe your idea *</label>
+                        <textarea id="description" name="description" rows="5" required placeholder="Tell us about the details, size, and any special touches..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact_method">Preferred Contact Method</label>
+                        <select id="contact_method" name="contact_method">
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="instagram">Instagram DM</option>
+                            <option value="phone">Phone Call</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mt-3" id="submit-btn">Send My Request</button>
+                    
+                    <div id="form-loading" class="form-status hidden">Sending your request...</div>
+                </form>
+
+                <div id="form-success" class="form-success hidden text-center">
+                    <h2 class="decorative-font">Your request is with Masi! 🧶❤️</h2>
+                    <p>Thank you for reaching out to Crochet by Masi. We'll get back to you shortly to discuss your request, pricing and delivery.</p>
+                    <p class="small-text text-muted mb-4">No payment has been made yet.</p>
+                    <div class="hero-buttons justify-center">
+                        <a href="#" class="btn btn-primary instagram-link">Follow us on Instagram</a>
+                        <a href="index.html" class="btn btn-outline">Back to Home</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <img src="assets/logo/crochet-by-masi.png" alt="Crochet by Masi" class="footer-logo">
+                <p class="decorative-font tagline">"Handmade slowly. Loved forever."</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="custom-order.html">Custom Orders</a></li>
+                    <li><a href="about.html">About Masi</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#" class="instagram-link">Instagram</a></li>
+                    <li><a href="#" class="whatsapp-link">WhatsApp</a></li>
+                    <li><a href="#" class="email-link">Email Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Made with ❤️ & yarn by Crochet by Masi. &copy; <span id="year"></span></p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
