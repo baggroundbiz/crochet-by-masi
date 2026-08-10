@@ -17,8 +17,8 @@
     <header class="site-header">
         <div class="container nav-container">
             <a href="index.html" class="logo-link">
-    <span class="text-logo">Crochet by Masi</span>
-</a>
+                <span class="text-logo">Crochet by Masi</span>
+            </a>
             
             <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
                 <span class="hamburger"></span>
@@ -64,67 +64,74 @@
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone / WhatsApp *</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <label for="whatsapp">WhatsApp Number *</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required placeholder="+91...">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="instagram">Instagram Username</label>
+                            <label for="instagram">Instagram Handle</label>
                             <input type="text" id="instagram" name="instagram" placeholder="@username">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="product_type">What would you like?</label>
-                        <input type="text" id="product_type" name="product_type" placeholder="e.g. A blue bunny, a custom bouquet">
+                    <div class="form-grid mt-3">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="Amigurumi">Amigurumi</option>
+                                <option value="Flowers & Bouquets">Flowers & Bouquets</option>
+                                <option value="Home Decor">Home Decor</option>
+                                <option value="Wearables">Wearables</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="colors">Preferred Color Palette</label>
+                            <input type="text" id="colors" name="colors" placeholder="e.g., Pastel pinks and sage green">
+                        </div>
                     </div>
 
-                    <div class="form-grid">
+                    <div class="form-group">
+                        <label for="description">Detailed Description *</label>
+                        <textarea id="description" name="description" rows="4" required placeholder="Tell us about your idea, size requirements, and any special touches..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reference">Reference Image Link</label>
+                        <input type="url" id="reference" name="reference" placeholder="Link to a Pinterest board, Instagram post, or Google Drive image">
+                    </div>
+
+                    <div class="form-grid mt-3">
                         <div class="form-group">
-                            <label for="colours">Preferred Colours</label>
-                            <input type="text" id="colours" name="colours">
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" id="quantity" name="quantity" min="1" value="1">
-                        </div>
-                        <div class="form-group">
-                            <label for="date">Required by Date</label>
+                            <label for="date">Required By Date</label>
                             <input type="date" id="date" name="date">
                         </div>
                         <div class="form-group">
                             <label for="budget">Budget Range</label>
                             <select id="budget" name="budget">
                                 <option value="">Select an option</option>
-                                <option value="Under ₹1000">Under ₹1000</option>
-                                <option value="₹1000 - ₹2500">₹1000 - ₹2500</option>
-                                <option value="₹2500 - ₹5000">₹2500 - ₹5000</option>
-                                <option value="₹5000+">₹5000+</option>
+                                <option value="Under ₹1,000">Under ₹1,000</option>
+                                <option value="₹1,000 - ₹2,500">₹1,000 - ₹2,500</option>
+                                <option value="₹2,500 - ₹5,000">₹2,500 - ₹5,000</option>
+                                <option value="₹5,000+">₹5,000+</option>
                             </select>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="description">Describe your idea *</label>
-                        <textarea id="description" name="description" rows="5" required placeholder="Tell us about the details, size, and any special touches..."></textarea>
-                    </div>
                     
                     <div class="form-group">
-                        <label for="contact_method">Preferred Contact Method</label>
-                        <select id="contact_method" name="contact_method">
-                            <option value="whatsapp">WhatsApp</option>
-                            <option value="instagram">Instagram DM</option>
-                            <option value="phone">Phone Call</option>
-                            <option value="email">Email</option>
-                        </select>
+                        <label for="location">Delivery City / Pincode</label>
+                        <input type="text" id="location" name="location">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block mt-3" id="submit-btn">Send My Request</button>
                     
-                    <div id="form-loading" class="form-status hidden">Sending your request...</div>
+                    <div id="form-loading" class="form-status hidden mt-3 text-center">
+                        <div class="loader-ring mx-auto" style="width: 30px; height: 30px; border-width: 2px;"></div>
+                        <p class="small-text mt-2">Sending your request...</p>
+                    </div>
                 </form>
 
                 <div id="form-success" class="form-success hidden text-center">
