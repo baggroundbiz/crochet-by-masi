@@ -7,7 +7,7 @@ const SITE_CONFIG = {
     instagram: "crochetbymasi", 
     whatsapp: "910000000000", 
     email: "hello@crochetbymasi.com", 
-    formEndpoint: "", 
+    formEndpoint: "https://script.google.com/macros/s/AKfycbzy48sMbXGUWU6O6ySBRa6gAkbgAsGbwWmolYxH6v9WKfdg4r3vdNiYHvybpCoefaAkGA/exec", 
     
     // Direct Spreadsheet ID for Frontline Homes method
     sheetId: "1YRjz-8e4zZoLeXPio4njdgCwABQ0wCjlLUZEotOakJU" 
