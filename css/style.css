@@ -773,3 +773,59 @@ input:focus, select:focus, textarea:focus {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* ========================================
+   LOGO WHITE SPACE FIXES
+======================================== */
+/* Remove the white background and padding from all image logo containers */
+.hero-badge, 
+.meet-masi-image, 
+.footer-logo {
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+/* Scale the image up slightly so it fills the circle and hides transparent edges */
+.hero-badge img, 
+.meet-masi-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.15); 
+}
+
+/* Adjust footer logo size since we removed the padding */
+.footer-logo {
+    width: 130px !important; 
+}
+
+/* ========================================
+   HEADER TEXT LOGO & WOVEN ANIMATION
+======================================== */
+.text-logo {
+    font-family: var(--font-decorative);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--clr-cocoa);
+    text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
+    
+    /* Left-to-right "thread pull" reveal animation */
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    animation: weaveReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes weaveReveal {
+    0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+
+/* Make sure the text scales down nicely on mobile screens */
+@media (max-width: 480px) {
+    .text-logo {
+        font-size: 1.8rem;
+    }
+}
