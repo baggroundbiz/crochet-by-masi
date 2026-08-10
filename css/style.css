@@ -829,3 +829,41 @@ input:focus, select:focus, textarea:focus {
         font-size: 1.8rem;
     }
 }
+
+/* ========================================
+   PRODUCT CARD ICON BUTTONS
+======================================== */
+.btn-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s, background-color 0.3s;
+    border: 2px solid transparent;
+    color: var(--clr-cocoa);
+}
+
+.ig-icon {
+    border-color: var(--clr-cocoa);
+    background-color: transparent;
+}
+
+.ig-icon:hover {
+    background-color: var(--clr-cocoa);
+    color: white;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(78, 51, 22, 0.2);
+}
+
+.wa-icon {
+    background-color: var(--clr-terracotta);
+    color: white;
+}
+
+.wa-icon:hover {
+    background-color: #8A2B12;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(168, 54, 24, 0.3);
+}
