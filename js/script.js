@@ -68,7 +68,7 @@ async function fetchProductsFromSheet() {
         const headers = data.table.cols.map(col => col.label.toLowerCase());
         
         // Map the rows to our product array
-        products = data.table.rows.map(row => {
+        products = data.table.rows.filter(row => row.c[1] && row.c[1].v).map(row => {
             let product = {};
             headers.forEach((header, index) => {
                 // Handle empty cells gracefully
