@@ -159,7 +159,7 @@ function renderProducts(productsToRender, containerId, loaderId) {
         loader.classList.add('hidden');
     }
     
-    // Clear existing products (keep loader if needed, but it's hidden)
+    // Clear existing products
     container.innerHTML = ''; 
     
     if (productsToRender.length === 0) {
@@ -174,9 +174,12 @@ function renderProducts(productsToRender, containerId, loaderId) {
     productsToRender.forEach(product => {
         const formattedPrice = typeof product.price === 'number' ? `₹${product.price}` : product.price;
         
-        // WhatsApp Order Message
+        // 1. Generate the WhatsApp Link with pre-filled message
         const orderMessage = encodeURIComponent(`Hi Masi! I'd like to order / enquire about the ${product.name}.`);
-        const orderLink = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${orderMessage}`;
+        const whatsappLink = `https://wa.me/${SITE_CONFIG.whatsapp}?text=${orderMessage}`;
+        
+        // 2. Generate the Instagram Link
+        const instagramLink = `https://instagram.com/${SITE_CONFIG.instagram}`;
         
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -191,9 +194,13 @@ function renderProducts(productsToRender, containerId, loaderId) {
                 <div class="product-footer">
                     <span class="product-price">${formattedPrice}</span>
                 </div>
-                <div class="product-actions" style="display: flex; gap: 0.5rem; flex-direction: column;">
-                    <a href="${orderLink}" class="btn btn-primary btn-block" target="_blank" rel="noopener noreferrer">DM to Order</a>
+                
+                <!-- NEW: Dual Action Buttons -->
+                <div class="product-actions" style="display: flex; gap: 0.8rem; flex-direction: column;">
+                    <a href="${instagramLink}" class="btn btn-outline btn-block" target="_blank" rel="noopener noreferrer">DM on Instagram</a>
+                    <a href="${whatsappLink}" class="btn btn-primary btn-block" target="_blank" rel="noopener noreferrer">WhatsApp</a>
                 </div>
+                
             </div>
         `;
         container.appendChild(card);
